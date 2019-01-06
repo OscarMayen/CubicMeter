@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+    <jdbc-connection-pool name="cubicMeterPool"
+                          res-type="javax.sql.DataSource"
+                          datasource-classname="org.h2.jdbcx.JdbcDataSource"
+                          pool-resize-quantity="2"
+                          max-pool-size="32"
+                          steady-pool-size="8">
+        <property name="URL" value="jdbc:h2:~/cubicMeterDB"/>
+        <property name="User" value="cubicmeter"/>
+        <property name="Password" value="cubicmeter"/>
+    </jdbc-connection-pool>
+ 
+    <jdbc-resource enabled="true" jndi-name="jdbc/cubicMeter" object-type="user" pool-name="cubicMeterPool">
+        <description>Test DataSource jdbc/integrity for Connection Pool jdbc/integrityPool</description>
+    </jdbc-resource>
+</resources>

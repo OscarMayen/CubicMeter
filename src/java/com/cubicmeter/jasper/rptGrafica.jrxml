@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptGrafica" language="groovy" pageWidth="300" pageHeight="792" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="9810a6e4-65d4-4998-92c0-23563e9396ca">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="IDGRUPO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IDMEDIDOR" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="MES" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ANIO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="MES1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ANIO1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="MES2" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ANIO2" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+A.FECHAINIMED,
+UPPER(FORMATDATETIME(FECHAINIMED, 'MMM-yyyy', 'es')) AS PERIODO,
+(A.MTRCUBIC - COALESCE(
+(SELECT L.MTRCUBIC FROM LECTURA L where L.MES = MONTH(DATEADD('MONTH', -1, A.fechainimed))
+ and L.ANIO = YEAR(DATEADD('MONTH', -1, A.fechainimed))
+and L.idgrupo = A.IDGRUPO and L.idmedidor = A.IDMEDIDOR), 0,
+(SELECT L.MTRCUBIC FROM LECTURA L where L.MES = MONTH(DATEADD('MONTH', -1, A.fechainimed))
+ and L.ANIO = YEAR(DATEADD('MONTH', -1, A.fechainimed))
+and L.idgrupo = A.IDGRUPO and L.idmedidor = A.IDMEDIDOR))) as MTRSCUBIC
+
+FROM LECTURA A
+where IDGRUPO = $P{IDGRUPO} and IDMEDIDOR = $P{IDMEDIDOR}
+AND ((MES = $P{MES} and ANIO = $P{ANIO})
+OR (MES = $P{MES1} and ANIO = $P{ANIO1})
+OR (MES = $P{MES2} and ANIO = $P{ANIO2}))
+ORDER BY A.FECHAINIMED]]>
+	</queryString>
+	<field name="FECHAINIMED" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PERIODO" class="java.lang.String"/>
+	<field name="MTRSCUBIC" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="122" splitType="Stretch">
+			<barChart>
+				<chart isShowLegend="false">
+					<reportElement x="0" y="0" width="193" height="122" uuid="93f62d83-b5e5-4c9c-9bc3-d78c99f5fb35"/>
+					<chartTitle position="Top"/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{PERIODO}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{PERIODO}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{MTRSCUBIC}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true" isShowTickLabels="true" isShowTickMarks="true">
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat verticalTickLabels="true"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

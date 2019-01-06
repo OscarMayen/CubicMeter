@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Productos</title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 90%;
+            }
+            body {
+                background-color: #ffffff;
+                font-size: 12px;
+                font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+                color: #000000;
+            }
+            /*.ui-datatable table { width: auto !important; }*/
+        </style>
+    </h:head>
+
+    <h:body>
+
+        <h:form id="formLectura">
+            <p:growl id="messages" showDetail="true" showSummary="true">
+                <p:autoUpdate />
+            </p:growl>
+            <div class="ui-fluid">
+                <p:tabView id="tabView">
+                    <p:tab title="General" id="tabGral">
+                        <p:menubar>
+                            <p:menuitem id="itmImprimir" value="Imprimir" icon="ui-icon-print"
+                                        actionListener="#{rptFactura.itmImprimirListener()}"
+                                        update="@form"/>
+                        </p:menubar>
+                        <p:defaultCommand target="btnDefautl"/>
+                        <p:commandButton id="btnDefautl" process="@none" global="false" style="display:none;"/>
+                        <p:panel id="pnlEnca" style="margin-top:5px">
+
+                            <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" 
+                                         columnClasses="ui-grid-col-3,ui-grid-col-9"> 
+                                <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" 
+                                             columnClasses="ui-grid-col-6,ui-grid-col-6">
+                                    <p:outputLabel for="calFechaIni" value="Fecha Inicio" />
+                                    <p:calendar id="calFechaIni" pattern="dd/MM/yyyy" showOn="button" navigator="true" 
+                                                value="#{rptFactura.fecha}" showButtonPanel="false"/>
+                                    <p:outputLabel value="Cliente" />
+                                    <p:selectOneMenu id="cmbCliente" value="#{rptFactura.idcliente}"  autoWidth="false">
+                                        <f:selectItems id="itemCliente" value="#{rptFactura.alstCliente}"/>
+                                        <p:ajax event="itemSelect" listener="#{rptFactura.onCmbClienteChange()}" update="@form" />
+                                    </p:selectOneMenu>
+                                    
+                                    <p:outputLabel value="Local" />
+                                    <p:selectOneMenu id="cmbLocal" value="#{rptFactura.idlocal}"  autoWidth="false">
+                                        <f:selectItems id="itemLocal" value="#{rptFactura.alstLocal}"/>
+                                    </p:selectOneMenu>
+                                </p:panelGrid>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:tab>
+
+                </p:tabView>
+
+            </div>
+        </h:form>
+
+
+    </h:body>
+
+</html>
