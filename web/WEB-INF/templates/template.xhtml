@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="/css/cssLayout.css"/>
+        <title>#{titulo}</title>
+        <ui:insert name="head" />
+    </h:head>
+
+    <h:body>
+        <ui:insert name="titulo">
+            <h3 class="titulo">#{titulo}</h3>
+        </ui:insert>
+        <ui:include src="./topbar.xhtml"></ui:include>
+        <div id="content"  class="contenido">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+          <ui:insert name="status">
+            <p:ajaxStatus style="width:64px;height:64px;position:fixed;left:10px;bottom:10px">
+                <f:facet name="start">
+                    <p:graphicImage name="/img/loader/loader.gif" />
+                </f:facet>
+
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
+        </ui:insert>
+        <ui:insert name="menu">
+            <h:form>
+                <p:stack icon="/resources/img/menu/stack.png" expanded="true">
+                    <p:menuitem value="Home" icon="/resources/img/menu/home.png" url="#"/>
+                    <p:menuitem value="Lectura" icon="/resources/img/menu/music.png" outcome="/lectura/Lectura"/>
+                    <p:menuitem value="Facturacion" icon="/resources/img/menu/video.png" outcome="/reporte/rptFactura"/>
+                </p:stack>
+            </h:form>
+        </ui:insert>  
+    </h:body>
+
+</html>

@@ -128,10 +128,8 @@ public class rptFacturaBean implements Serializable {
     }
     
     public void onCmbClienteChange() {
-        Utils.alert("Se ejecuta", FacesMessage.SEVERITY_INFO);
         try {
             alstLocal.clear();
-            
             alstLocal.add(new SelectItem(-1, "Locales"));
             lstLocal = ejbLectura.buscarLocalCliente(idcliente);
             lstLocal.stream().forEach((c) -> {

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptCubicMeter" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="743d89f8-4ae7-4c72-b39c-555180abb812">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="32"/>
+	<property name="ireport.y" value="31"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/home/nmayen/Escritorio/"]]></defaultValueExpression>
 	</parameter>
@@ -31,9 +31,12 @@ A.*,
   MONTH(DATEADD('MONTH', -3, A.fechainimed)) AS MESANT3,
   YEAR(DATEADD('MONTH', -3, A.fechainimed)) AS ANIOANT3,
 
- (SELECT L.MTRCUBIC FROM LECTURA L where L.MES = MONTH(DATEADD('MONTH', -1, A.fechainimed))
+(COALESCE((SELECT L.MTRCUBIC FROM LECTURA L where L.MES = MONTH(DATEADD('MONTH', -1, A.fechainimed))
  and L.ANIO = YEAR(DATEADD('MONTH', -1, A.fechainimed)) and L.IDGRUPO = A.IDGRUPO
-  and L.IDMEDIDOR = A.IDMEDIDOR) MTRSANT
+  and L.IDMEDIDOR = A.IDMEDIDOR), 0,
+(SELECT L.MTRCUBIC FROM LECTURA L where L.MES = MONTH(DATEADD('MONTH', -1, A.fechainimed))
+ and L.ANIO = YEAR(DATEADD('MONTH', -1, A.fechainimed)) and L.IDGRUPO = A.IDGRUPO
+  and L.IDMEDIDOR = A.IDMEDIDOR))) as  MTRSANT
 FROM LECTURA A
 JOIN CLIENTES B ON B.IDCLIENTE = A.IDCLIENTE
 where MES = $P{MES} AND ANIO = $P{ANIO} AND IDGRUPO = $P{GRUPO} and IDMEDIDOR = $P{MEDIDOR}]]>
