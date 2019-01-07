@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptCubicMeter" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="743d89f8-4ae7-4c72-b39c-555180abb812">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptCubicMeter" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="743d89f8-4ae7-4c72-b39c-555180abb812">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="31"/>
+	<property name="ireport.y" value="38"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/home/nmayen/Escritorio/"]]></defaultValueExpression>
 	</parameter>
@@ -22,6 +22,7 @@
 		<![CDATA[SELECT
 A.*,
  (SELECT M.NOMMEDIDOR FROM MEDIDOR M WHERE M.IDGRUPO = A.IDGRUPO AND M.IDMEDIDOR = A.IDMEDIDOR)  AS MEDIDOR,
+  UPPER(FORMATDATETIME(A.FECHAINIMED, 'MMM-yyyy', 'es')) AS PERIODO,
   B.NOMBRE AS CLIENTE,
   B.NIT, B.NRC, B.GIRO, B.DIRECCION,B.LOGO,
   MONTH(DATEADD('MONTH', -1, A.fechainimed)) AS MESANT1,
@@ -75,6 +76,7 @@ where MES = $P{MES} AND ANIO = $P{ANIO} AND IDGRUPO = $P{GRUPO} and IDMEDIDOR = 
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="MEDIDOR" class="java.lang.String"/>
+	<field name="PERIODO" class="java.lang.String"/>
 	<field name="CLIENTE" class="java.lang.String"/>
 	<field name="NIT" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -117,31 +119,31 @@ where MES = $P{MES} AND ANIO = $P{ANIO} AND IDGRUPO = $P{GRUPO} and IDMEDIDOR = 
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="89" splitType="Stretch">
+		<band height="95" splitType="Stretch">
 			<rectangle radius="10">
-				<reportElement x="18" y="0" width="339" height="70" uuid="a5d324fb-c8ed-4973-877c-e1ceb7e4f9b9"/>
+				<reportElement x="18" y="6" width="339" height="70" uuid="a5d324fb-c8ed-4973-877c-e1ceb7e4f9b9"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="30" y="11" width="316" height="12" uuid="dd2934a9-44e4-4e4e-8fd6-233669c9cf6b"/>
+				<reportElement x="30" y="17" width="316" height="14" uuid="dd2934a9-44e4-4e4e-8fd6-233669c9cf6b"/>
 				<textElement textAlignment="Center" markup="none">
-					<font size="10" isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["CENTRO COMERCIAL LOS CASTAÑOS"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="30" y="23" width="316" height="24" uuid="d7911673-d878-4e84-869c-22b9f1185cd6"/>
+				<reportElement x="30" y="43" width="316" height="24" uuid="d7911673-d878-4e84-869c-22b9f1185cd6"/>
 				<textElement markup="none">
-					<font size="8"/>
+					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Avenida Masferrer Norte y 9a Calle Poniente Bis #3298, \n "
-+ "Col Escalon San Salvador"]]></textFieldExpression>
++ "Col Escalon San Salvador, El Salvador C.A"]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="429" y="-12" width="107" height="97" uuid="60266926-b372-43ca-bd70-e1c76bcbbb09"/>
-				<imageExpression><![CDATA["castanios.jpg"]]></imageExpression>
+				<reportElement positionType="Float" x="441" y="1" width="101" height="89" uuid="f804cdc8-514d-4f42-85d7-8a40047d62d7"/>
+				<imageExpression><![CDATA["Logo.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -157,7 +159,7 @@ where MES = $P{MES} AND ANIO = $P{ANIO} AND IDGRUPO = $P{GRUPO} and IDMEDIDOR = 
 				</graphicElement>
 			</rectangle>
 			<rectangle radius="10">
-				<reportElement x="299" y="174" width="268" height="112" uuid="abf32081-7efc-4e36-8c31-0a923ea548bb"/>
+				<reportElement x="299" y="174" width="268" height="108" uuid="abf32081-7efc-4e36-8c31-0a923ea548bb"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
@@ -231,14 +233,14 @@ where MES = $P{MES} AND ANIO = $P{ANIO} AND IDGRUPO = $P{GRUPO} and IDMEDIDOR = 
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[CONSUMO M]]></text>
+				<text><![CDATA[CONSUMO m³]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="318" y="219" width="80" height="12" uuid="3a4b7ee2-0924-4f46-b567-159bbe29d200"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[TARIFA POR M]]></text>
+				<text><![CDATA[TARIFA POR m³]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="191" y="339" width="80" height="12" uuid="c37e7eb0-8567-4893-8b35-cd6f4f3fc2a2"/>
@@ -252,7 +254,7 @@ where MES = $P{MES} AND ANIO = $P{ANIO} AND IDGRUPO = $P{GRUPO} and IDMEDIDOR = 
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[IVA]]></text>
+				<text><![CDATA[IVA 13%]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="191" y="363" width="80" height="12" uuid="0d03cfee-5076-4588-ac72-240608b3ffef"/>
@@ -367,7 +369,7 @@ where MES = $P{MES} AND ANIO = $P{ANIO} AND IDGRUPO = $P{GRUPO} and IDMEDIDOR = 
 				<text><![CDATA[GIRO]]></text>
 			</staticText>
 			<rectangle radius="10">
-				<reportElement x="18" y="174" width="268" height="112" uuid="0e5f84bc-c21e-49d2-ac94-30e389369cc2"/>
+				<reportElement x="18" y="173" width="268" height="108" uuid="0e5f84bc-c21e-49d2-ac94-30e389369cc2"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
@@ -435,7 +437,7 @@ where MES = $P{MES} AND ANIO = $P{ANIO} AND IDGRUPO = $P{GRUPO} and IDMEDIDOR = 
 				<reportElement x="299" y="188" width="268" height="1" uuid="54847cf2-401c-46ae-a405-6aa9e3db1267"/>
 			</line>
 			<image>
-				<reportElement x="102" y="189" width="113" height="78" uuid="cde0bc61-5b7f-4a8e-aa9c-c01e2055a46a"/>
+				<reportElement positionType="Float" x="102" y="189" width="113" height="78" uuid="cde0bc61-5b7f-4a8e-aa9c-c01e2055a46a"/>
 				<imageExpression><![CDATA[$F{LOGO}]]></imageExpression>
 			</image>
 			<staticText>
@@ -479,14 +481,14 @@ where MES = $P{MES} AND ANIO = $P{ANIO} AND IDGRUPO = $P{GRUPO} and IDMEDIDOR = 
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["G" + $F{IDGRUPO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["G" + $F{IDGRUPO} + "-C" +$F{IDMEDIDOR}]]></textFieldExpression>
 			</textField>
-			<textField pattern="MM/yyyy" isBlankWhenNull="true">
+			<textField pattern="MMM-yyyy" isBlankWhenNull="true">
 				<reportElement x="202" y="30" width="50" height="12" uuid="a66152bd-f514-4abc-ab83-1a825f03d9f9"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{FECHAINIMED}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PERIODO}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="318" y="13" width="218" height="12" uuid="9f69217a-e3c5-4d01-a9aa-4ab9d121c169"/>

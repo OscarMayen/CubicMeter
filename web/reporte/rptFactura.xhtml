@@ -37,7 +37,7 @@
                                             <p:outputLabel value="Cliente" />
                                             <p:selectOneMenu id="cmbCliente" value="#{rptFactura.idcliente}"  autoWidth="false">
                                                 <f:selectItems id="itemCliente" value="#{rptFactura.alstCliente}"/>
-                                                <p:ajax event="itemSelect" listener="#{rptFactura.onCmbClienteChange()}" update="@form" />
+                                                <p:ajax event="itemSelect" listener="#{rptFactura.onCmbClienteChange()}" update="cmbLocal" />
                                             </p:selectOneMenu>
 
                                             <p:outputLabel value="Local" />

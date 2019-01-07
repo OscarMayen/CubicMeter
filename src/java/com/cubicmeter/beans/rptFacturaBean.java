@@ -107,7 +107,6 @@ public class rptFacturaBean implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
             completeCombos();
         } catch (Exception ex) {
             Logger.getLogger(rptFacturaBean.class.getName())
@@ -134,6 +133,7 @@ public class rptFacturaBean implements Serializable {
             lstLocal = ejbLectura.buscarLocalCliente(idcliente);
             lstLocal.stream().forEach((c) -> {
             alstLocal.add(new SelectItem(c.getIdlocal(), c.getNomlocal()));
+            idlocal = -1;
         });
             
         } catch (Exception ex) {

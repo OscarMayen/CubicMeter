@@ -284,6 +284,7 @@ public class ejbLectura implements ejbLecturaLocal {
         StringBuilder jpql = new StringBuilder();
         try {
             jpql.append("SELECT * FROM CLIENTES WHERE ESTADO = 1");
+            jpql.append("ORDER BY NOMBRE");
             Query q = em.createNativeQuery(jpql.toString(), Clientes.class);
             return q.getResultList();
         } catch (NoResultException no) {
